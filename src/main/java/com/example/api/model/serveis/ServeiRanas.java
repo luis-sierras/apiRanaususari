@@ -41,4 +41,8 @@ public class ServeiRanas {
         if(res!=null) repositoriRanas.deleteById(id);
         return res;
     }
+
+    public void añadirRana(Rana rana) {
+
+    }
 }
