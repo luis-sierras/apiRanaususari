@@ -42,7 +42,4 @@ public class ServeiRanas {
         return res;
     }
 
-    public void añadirRana(Rana rana) {
-
-    }
 }

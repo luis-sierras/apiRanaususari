@@ -32,9 +32,9 @@ public class ControladorResponseEntity {
     }
 
     @PostMapping("/rana")
-    public ResponseEntity<?> anadirRana(@RequestBody Rana rana) {
+    public ResponseEntity<?> afegirRana(@RequestBody Rana rana) {
         try {
-            serveiRanas.añadirRana(rana);
+            serveiRanas.afegirRana(rana);
             return new ResponseEntity<Rana>(rana, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());

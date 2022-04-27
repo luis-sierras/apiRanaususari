@@ -1,32 +1,47 @@
 package com.example.api.cotroladors;
 
+import com.example.api.model.entitats.Usuario;
+import com.example.api.model.entitats.UsuarioDTO;
 import com.example.api.model.serveis.ServicioUsuario;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
 public class ControladorRegistroLoginUsuarios {
-    private final ServicioUsuario serveiUsuarios;
+    private final ServicioUsuario servicioUsuario;
 
 
     @GetMapping("/me")
-    public UsuarioDTO consultaQuiEts(@AuthenticationPrincipal Usuari usu) {
-        return new UsuariConsultaDTO(usu.getUsername(), usu.getAvatar(), usu.getRol());
+    public UsuarioDTO consultaQuiEts(@AuthenticationPrincipal Usuario usu) {
+        return new UsuarioDTO(usu.getUsername(), usu.getAvatar(), usu.getRol());
     }
 
     /*
     {
-    "username":"Montse",
+    "username":"Luis",
     "password":"1234",
     "avatar":"http://imatge.com"
     }
     Afegeix id automàticament
      */
     @PostMapping("/usuaris")
-    public ResponseEntity<?> nouUsuari(@RequestBody Usuari nouUsuari) {
+    public ResponseEntity<?> nouUsuario(@RequestBody Usuario nouUsuario) {
         try {
-            Usuari res = serveiUsuaris.crearNouUsuari(nouUsuari);
-            UsuariConsultaDTO usu = new UsuariConsultaDTO(res.getUsername(), res.getAvatar(), res.getRol());
-            return new ResponseEntity<UsuariConsultaDTO>(usu, HttpStatus.CREATED);
+            Usuario res = servicioUsuario.crearNuevoUsuario(nouUsuario);
+            UsuarioDTO usu = new UsuarioDTO(res.getUsername(), res.getAvatar(), res.getRol());
+            return new ResponseEntity<UsuarioDTO>(usu, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException ex) {
             //per si intentem afegir 2 usuaris amb el mateix username, saltarà excepció
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -34,11 +49,11 @@ public class ControladorRegistroLoginUsuarios {
     }
 
     @GetMapping("/usuaris")
-    public ResponseEntity<?> llistarUsuarisDTO() {
-        List<Usuari> res = serveiUsuaris.llistarUsuaris();
-        List<UsuariConsultaDTO> aux = new ArrayList();
-        for (Usuari usu : res) {
-            aux.add(new UsuariConsultaDTO(usu.getUsername(), usu.getAvatar(), usu.getRol()));
+    public ResponseEntity<?> llistarUsuariosDTO() {
+        List<Usuario> res = servicioUsuario.listarUsuarios();
+        List<UsuarioDTO> aux = new ArrayList();
+        for (Usuario usu : res) {
+            aux.add(new UsuarioDTO(usu.getUsername(), usu.getAvatar(), usu.getRol()));
         }
         if (res.isEmpty()) {
             return ResponseEntity.notFound().build();

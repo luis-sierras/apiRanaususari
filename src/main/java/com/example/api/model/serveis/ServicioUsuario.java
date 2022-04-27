@@ -18,13 +18,13 @@ public class ServicioUsuario {
     public Usuario consultarPorUsername(String username) {
         return repositoriUsuario.findByUsername(username).orElse(null);
     }
-    public Usuario crearNouUsuari(Usuario nouUsuari) {
+    public Usuario crearNuevoUsuario(Usuario nouUsuari) {
         nouUsuari.setPassword(xifrat.encode(nouUsuari.getPassword()));
         repositoriUsuario.save(nouUsuari);
         return nouUsuari;
     }
 
-    public List<Usuario> llistarUsuaris(){
+    public List<Usuario> listarUsuarios(){
         return repositoriUsuario.findAll();
     }
 
