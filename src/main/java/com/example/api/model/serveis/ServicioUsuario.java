@@ -3,6 +3,7 @@ package com.example.api.model.serveis;
 import com.example.api.model.entitats.Usuario;
 import com.example.api.model.repositoris.RepositoriUsuario;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +29,7 @@ public class ServicioUsuario {
         return repositoriUsuario.findAll();
     }
 
+    public UserDetails consultarPorId(Long id) {
+        return repositoriUsuario.findById(id).orElse(null);
+    }
 }

@@ -9,14 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-/* ****************CRUD*************************
-- 1) listar todas las ranas
-- 2) añadir rana
-- 3) Consultar una rana por id
-- 4) Modificar rana
-- 5) Eliminar rana por id
- ***********************************************/
-
 import java.util.List;
 
 @RestController
@@ -31,7 +23,7 @@ public class ControladorResponseEntity {
         else return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/rana")
+    @PostMapping("/ranas")
     public ResponseEntity<?> afegirRana(@RequestBody Rana rana) {
         try {
             serveiRanas.afegirRana(rana);
@@ -41,24 +33,24 @@ public class ControladorResponseEntity {
         }
     }
 
-    @GetMapping("/rana/{id}")
+    @GetMapping("/ranas/{id}")
     public ResponseEntity<?> consultarRana(@PathVariable int id) {
         Rana res = serveiRanas.consultarRana(id);
         if (res == null) return ResponseEntity.notFound().build();
         else return ResponseEntity.ok(res);
     }
 
-    @PutMapping("/rana")
-    public ResponseEntity<?> modificarVideojoc(@RequestBody Rana rana){
+    @PutMapping("/ranas")
+    public ResponseEntity<?> modificarVideojoc(@RequestBody Rana rana) {
         Rana res = serveiRanas.modificarRana(rana);
-        if(res!=null) return ResponseEntity.ok(res);
+        if (res != null) return ResponseEntity.ok(res);
         else return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/rana/{id}")
-    public ResponseEntity<?> eliminarRana(@PathVariable int id){
+    @DeleteMapping("/ranas/{id}")
+    public ResponseEntity<?> eliminarRana(@PathVariable int id) {
         Rana res = serveiRanas.eliminarRana(id);
-        if(res!=null) return ResponseEntity.noContent().build();
+        if (res != null) return ResponseEntity.noContent().build();
         else return ResponseEntity.notFound().build();
     }
 

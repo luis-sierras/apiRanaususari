@@ -17,4 +17,8 @@ public class ElMeuUserDetailsService implements UserDetailsService {
         return servicioUsuarioisUserDetails.consultarPorUsername(username);
     }
 
+    public UserDetails loadUserById(Long id){
+        return servicioUsuarioisUserDetails.consultarPorId(id);
+    }
+
 }
