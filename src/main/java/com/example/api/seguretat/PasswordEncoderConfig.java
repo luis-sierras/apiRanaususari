@@ -6,21 +6,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class PasswordEncoderConfig/* implements PasswordEncoder*/ {
+public class PasswordEncoderConfig {
 
     @Bean
     public PasswordEncoder xifrat(){
         return new BCryptPasswordEncoder();
     }
-
-//    @Override
-//    public String encode(CharSequence rawPassword) {
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean matches(CharSequence rawPassword, String encodedPassword) {
-//        return false;
-//    }
 
 }

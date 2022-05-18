@@ -61,8 +61,8 @@ public class ControladorRegistroLoginUsuarios {
 
 
 //    {
-//    "username":"Luis",
-//    "password":"1234",
+//    "username":"LuisJWT",
+//    "password":"1234JWT",
 //    "avatar":"http://imatge.com"
 //    }
 //    Afegeix id automàticament
