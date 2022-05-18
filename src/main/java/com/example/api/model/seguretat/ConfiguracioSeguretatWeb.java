@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -17,7 +19,7 @@ public class ConfiguracioSeguretatWeb extends WebSecurityConfigurerAdapter {
 
     private final ElMeuAuthenticationEntryPoint elmeuEntryPoint;
     private final ElMeuUserDetailsService elmeuUserDetailsService;
-    private final PasswordEncoderConfig xifrat;
+    private final PasswordEncoder xifrat;
 
 //Per fer proves al principi, per poder fer post i put d'usuaris sense seguretat
 //    @Override
@@ -45,21 +47,21 @@ public class ConfiguracioSeguretatWeb extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors() //amb aquesta línia evitem la configuració custom del cors en un fitxer a part
-                .and()
+        http
                 .httpBasic()
-                .authenticationEntryPoint(elmeuEntryPoint)
                 .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+            //per poder accedir al h2-console
+                //  .authorizeRequests().antMatchers("/").permitAll().and()
+                //  .authorizeRequests().antMatchers("/h2-console/**").permitAll()
+                // .and()
+                .csrf().disable()
+                // .headers().frameOptions().disable()
+                // .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/me/**").hasRole("ADMIN") //per fer proves del forbidden
-                .antMatchers(HttpMethod.GET, "/users/**", "/rana/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/users/**", "/rana/**").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/rana/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/rana/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/rana/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated();
-        // .and()
-        // .csrf().disable();
     }
+
 
 }

@@ -31,7 +31,7 @@ public class ControladorRegistroLoginUsuarios {
     /*
     {
     "username":"Luis",
-    "password":"1234",
+    "password":"123456789",
     "avatar":"http://imatge.com"
     }
     Afegeix id automàticament
